@@ -6,10 +6,15 @@ phases:
       - echo "Installing NGINX"
       - sudo apt-get update
       - sudo apt-get install nginx -y
+
   build:
     commands:
       - echo "Build started on $(date)"
-      - cp index.html /var/www/html/
+      - mkdir -p build_output  # ✅ Ensure directory exists
+      - cp index.html build_output/index.html
+      - tar -cvf build_output/bundle.tar -C build_output .  # ✅ Create the artifact
+      - ls -ltr build_output/  # ✅ Verify files exist
+
   post_build:
     commands:
       - echo "Configuring NGINX"
@@ -17,5 +22,5 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: build_output  # ✅ Ensure files are coming from the correct directory
+  base-directory: build_output  # ✅ Ensure files are coming from correct directory
   name: bundle.tar              # ✅ Correctly create the bundle
