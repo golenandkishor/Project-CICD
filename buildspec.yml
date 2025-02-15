@@ -3,24 +3,17 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "Checking OS..."
-      - cat /etc/os-release  # Debug OS
-      - echo "Installing NGINX..."
-      - apt-get update
-      - apt-get install nginx -y
-      - which nginx || echo "NGINX NOT FOUND!"
+      - echo Installing NGINX
+      - sudo apt-get update
+      - sudo apt-get install nginx -y
   build:
     commands:
-      - echo "Build started on $(date)"
-      - ls -l index.html || echo "index.html NOT FOUND!"
-      - cp index.html /var/www/html/ || echo "FAILED TO COPY index.html!"
+      - echo Build started on 'date'
+      - sudo cp index.html /var/www/html/
   post_build:
     commands:
-      - echo "Configuring NGINX..."
-      - nginx -t || echo "NGINX CONFIG TEST FAILED!"
-      - service nginx restart || echo "FAILED TO RESTART NGINX!"
+      - echo Configuring NGINX
 
 artifacts:
   files:
     - '**/*'
-
