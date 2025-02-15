@@ -8,11 +8,13 @@ phases:
       - sudo apt-get install nginx -y
   build:
     commands:
-      - echo Build started on '$date'
-      - sudo cp index.html /var/www/html/
+      - echo Build started on $'date'
+      - sudo cp index.html /var/www/html/ || echo "index.html not found!"
   post_build:
     commands:
       - echo Configuring NGINX
+      - nginx -t  # Check NGINX configuration
+      - service nginx restart  # Restart NGINX if necessary
 
 artifacts:
   files:
