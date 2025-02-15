@@ -17,3 +17,5 @@ phases:
 artifacts:
   files:
     - '**/*'
+  base-directory: build_output  # ✅ Ensure files are coming from the correct directory
+  name: bundle.tar              # ✅ Correctly create the bundle
